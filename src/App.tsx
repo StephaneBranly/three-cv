@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Suspense, useRef, Ref } from "react"
+import { Canvas, useFrame } from "react-three-fiber"
+import { Stats, OrbitControls } from "@react-three/drei"
+import * as three from "three"
+import "./App.css"
 
-function App() {
+const Cube = () => {
+  const cube = useRef<three.Mesh>()
+
+  useFrame(() => {
+    cube.current!.rotation.x += 0.01
+    cube.current!.rotation.y += 0.01
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <mesh ref={cube as unknown as Ref<three.Mesh>}>
+      <boxBufferGeometry args={[2, 2, 2]} />
+      <meshStandardMaterial color="#F3A11A" />
+    </mesh>
+  )
 }
 
-export default App;
+const Scene = () => {
+  return (
+    <>
+      {/* <gridHelper /> */}
+      {/* <axesHelper /> */}
+      <pointLight intensity={1.0} position={[5, 3, 5]} />
+      <Cube />
+    </>
+  )
+}
+
+const App = () => {
+  return (
+    <div
+      className="App"
+    >
+      <h1>Stéphane BRANLY</h1>
+      <Canvas
+        // concurrent
+        camera={{
+          near: 0.1,
+          far: 1000,
+          zoom: 1,
+        }}
+        onCreated={({ gl }) => {
+          gl.setClearColor("#252934")
+        }}
+      >
+        {/* <Stats /> */}
+        {/* <OrbitControls /> */}
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
+      </Canvas>
+    </div>
+  )
+}
+
+export default App

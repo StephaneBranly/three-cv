@@ -1,6 +1,7 @@
 {
   "name": "three-cv",
   "version": "0.1.0",
+  "homepage": "https://stephanebranly.github.io/three-cv/",
   "dependencies": {
     "@react-three/drei": "^9.23.5",
     "@testing-library/jest-dom": "^5.16.5",

@@ -2,7 +2,7 @@ import { Suspense, useRef, Ref } from "react"
 import { Canvas, useFrame } from "react-three-fiber"
 import { Stats, OrbitControls } from "@react-three/drei"
 import * as three from "three"
-import "./App.css"
+import "./App.scss"
 
 const Cube = () => {
   const cube = useRef<three.Mesh>()

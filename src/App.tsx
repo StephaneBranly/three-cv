@@ -14,6 +14,7 @@ import { Text } from 'assets'
 import { LineSegments, MeshBasicMaterial } from "three"
 import { Html, useProgress } from '@react-three/drei'
 import G7font from 'fonts/g7.json'
+import LinuxBiolinum from 'fonts/LinuxBiolinum.json'
 import Color from "colorjs.io"
 import { range } from "lodash"
 function Loader() {
@@ -42,21 +43,24 @@ const Floor = () => {
   return (
     <mesh rotation={[-Math.PI/2, 0,0]} receiveShadow>
       <planeBufferGeometry args={[20, 10]} />
-      <meshStandardMaterial color="#0F8A71" />
+      <meshStandardMaterial 
+          color="#0F8A71" 
+        />
     </mesh>
   )
 }
 
 const Walls = () => {
+  //#FF8A71
   return (
     <group>
       <mesh rotation={[0,Math.PI/2,0]} position={[-6, 2.5, 0]} receiveShadow>
         <planeBufferGeometry args={[10, 5]} />
-        <meshStandardMaterial color="#FF8A71" />
+        <meshStandardMaterial color="#2F2A21" />
       </mesh>
       <mesh receiveShadow position={[0, 2.5, -1]}>
         <planeBufferGeometry args={[20, 5]} />
-        <meshStandardMaterial color="#FF8A71" />
+        <meshStandardMaterial color="#2F2A21" />
       </mesh>
     </group>
   )
@@ -64,46 +68,43 @@ const Walls = () => {
 
 const CovBox = (props: { x : number, y : number, value : number}) => {
   const { x, y, value } = props
-  const box = useRef<THREE.Mesh>()
-  const clock = new THREE.Clock();
-  // useFrame(() => {
-  //   const z = Math.sin(clock.getElapsedTime()+x*Math.PI/5+y*Math.PI/5) * 0.5
-  //   box.current!.position.y = z + 0.01;
 
-  //   const c1 = new Color("rebeccapurple")
-  //   const c2 = new Color("lch", [85, 100, 85])
-  //   const linspace = c1.range(c2, {space: "srgb"})
-  //   const rgb = linspace(1-z-0.5).srgb // midpoint
-  //   // console.log(rgb)
-
-  //   box.current!.material = new THREE.MeshBasicMaterial({color: new THREE.Color(...rgb)})
-  // })
-  const interpolateColor = (r1: number, g1: number, b1: number, r2: number, g2: number, b2: number, ratio: number) => {
-    const r = Math.round(r1 + (r2 - r1) * ratio)
-    const g =  Math.round(g1 + (g2 - g1) * ratio)
-    const b =  Math.round(b1 + (b2 - b1) * ratio)
-    return [r, g, b]
+  const interpolateColor = (colors: number[][], ratio: number) => {
+    const colorId = Math.floor(ratio * (colors.length-1))
+    if (colorId === colors.length-1) {
+      return colors[colors.length - 1]
+    }
+    const color1 = colors[colorId]
+    const color2 = colors[colorId+1]
+    return range(3).map(i => Math.round(color1[i] + (color2[i] - color1[i]) * ratio))
   }
   const computeColor = (value: number) => {
-    const color = interpolateColor(76, 36, 98, 247, 193, 137, value)
+    //[[53, 25, 62], [112, 31, 87], [172, 23, 89], [225, 51, 66], [243, 118, 81], [246, 180, 143]]
+    const color = interpolateColor([[53, 25, 62], [255, 138, 113]], value)
     return `rgb(${color[0]}, ${color[1]}, ${color[2]})`
   }
 
   if (x === y) 
     return (
-      <mesh position={[-5 + x / 2, value-1/2+0.01, y / 2]} castShadow>
-        <boxBufferGeometry args={[0.4, 1, 0.4]} />
-        <meshStandardMaterial color={computeColor(value)} />
+      <mesh position={[-5 + x / 2, 0, y / 2]} rotation={[-Math.PI/2, 0, 0]} castShadow>
+        <extrudeBufferGeometry args={[undefined,  { depth: 1, bevelSize: 0.1, bevelOffset: -0.4, bevelThickness: 0.1, bevelSegments: 12}]}>
+          <planeBufferGeometry args={[0.2, 0.2]} />
+        </extrudeBufferGeometry>
+        <meshStandardMaterial color={computeColor(value)} opacity={0.2} />
       </mesh>
     ) 
   return (
     <group>
-      <mesh position={[-5 + x / 2, value-1/2+0.01, y / 2]} castShadow>
-        <boxBufferGeometry args={[0.4, 1, 0.4]} />
+      <mesh position={[-5 + x / 2, 0, y / 2]} rotation={[-Math.PI/2, 0, 0]} castShadow>
+        <extrudeBufferGeometry args={[undefined,  { depth: value+0.01, bevelSize: 0.1, bevelOffset: -0.4, bevelThickness: 0.1, bevelSegments: 12}]}>
+          <planeBufferGeometry args={[0.2, 0.2]} />
+        </extrudeBufferGeometry>
         <meshStandardMaterial color={computeColor(value)} />
       </mesh>
-      <mesh position={[-5 + y / 2, value-1/2+0.01, x / 2]} castShadow>
-        <boxBufferGeometry args={[0.4, 1, 0.4]} />
+      <mesh position={[-5 + y / 2, 0, x / 2]} rotation={[-Math.PI/2, 0, 0]} castShadow>
+        <extrudeBufferGeometry args={[undefined,  { depth: value+0.01, bevelSize: 0.1, bevelOffset: -0.4, bevelThickness: 0.1, bevelSegments: 12}]}>
+          <planeBufferGeometry args={[0.2, 0.2]} />
+        </extrudeBufferGeometry>
         <meshStandardMaterial color={computeColor(value)} />
       </mesh>
     </group>
@@ -133,8 +134,15 @@ const CovMatrix = (props: {size: number}) => {
       setMatrix(range(size).map(x => range(x+1).map((y) => interpolate(0, matrixFrom[x][y], 1, matrixTo[x][y], time))))
     } 
   })
+  const matrixBoardSize = (size + 1) * 0.5
   return (
     <group>
+       <mesh position={[-5+matrixBoardSize/2-0.5, -0.05, matrixBoardSize/2 - 0.5]} rotation={[-Math.PI/2, 0, 0]} castShadow>
+        <extrudeBufferGeometry args={[undefined,  { depth: 0.01, bevelSize: 0.2, bevelOffset: (matrixBoardSize + 0.5)/size, bevelThickness: 0.1, bevelSegments: 12}]}>
+          <planeBufferGeometry args={[matrixBoardSize, matrixBoardSize]} />
+        </extrudeBufferGeometry>
+        <meshStandardMaterial color='#2F2A21' />
+      </mesh>
       {range(size).map((x) => range(x+1).map((y) => <CovBox key={`cov(x${x},x${y})`} x={x} y={y} value={matrix[x][y]} />))}
     </group>
   )
@@ -248,8 +256,8 @@ const Poly = () => {
 const Scene = () => {
   return (
     <>
-      <gridHelper />
-      <axesHelper />
+      {/* <gridHelper /> */}
+      {/* <axesHelper /> */}
       {/* <Computer /> */}
       {/* <UTC /> */}
       {/* <Poly /> */}
@@ -258,7 +266,7 @@ const Scene = () => {
       {/* <ambientLight intensity={0.5} /> */}
 
      
-      <Text text="Stephane BRANLY" color="#e7f8fa" fontfile={G7font} meshProps={{position: [-2,0,0], castShadow: true}} textGeometry={{size: 0.3}}/>
+      <Text text="Stephane BRANLY" color="#f7f8fa" fontfile={LinuxBiolinum} meshProps={{position: [-2,0,-1], castShadow: true}} textGeometry={{size: 0.3, height: 0.03 }}/>
       <Floor />
       <Walls />
       {/* <Cube /> */}

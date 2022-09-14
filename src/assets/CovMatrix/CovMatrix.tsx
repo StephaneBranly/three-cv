@@ -3,6 +3,7 @@ import { range } from "lodash"
 import { useState } from "react"
 import { useFrame } from "react-three-fiber"
 import * as THREE from "three"
+import { interpolate } from "utils"
 
 
 export interface CovMatrixProps {
@@ -14,9 +15,7 @@ const CovMatrix = (props: CovMatrixProps) => {
     const generateNewCovMatrix = () => {
         return range(size).map(x => range(x+1).map((y) => x===y?1:Math.random()))
     }
-    const interpolate = (x1: number, y1: number, x2: number, y2: number, x: number) => {
-        return y1 + (y2 - y1) * (x - x1) / (x2 - x1)
-    }
+   
     const [matrixFrom, setMatrixFrom] = useState(generateNewCovMatrix())
     const [matrixTo, setMatrixTo] = useState(generateNewCovMatrix())
     const [matrix, setMatrix] = useState(matrixFrom)

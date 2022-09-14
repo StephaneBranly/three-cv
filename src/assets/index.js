@@ -5,4 +5,5 @@ import CovMatrix from "./CovMatrix/CovMatrix"
 import Menu from "./Menu/Menu"
 import Planet from "./Planet/Planet"
 import Stars from "./Stars/Stars"
-export { Text, Room, CovBox, CovMatrix, Menu, Planet, Stars }
+import CameraControls from "./CameraControls/CameraControls"
+export { Text, Room, CovBox, CovMatrix, Menu, Planet, Stars, CameraControls }

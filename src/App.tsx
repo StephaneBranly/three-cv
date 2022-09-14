@@ -138,13 +138,7 @@ const App = () => {
       className="App"
     >
       <Canvas
-        shadows
-        camera={{
-          near: 0.1,
-          far: 1000,
-          zoom: 1,
-          position: [0, 4, 10],
-        }}
+        // shadows
       >
         <color attach="background" args={['#202030']} />
         {/* <fog attach="fog" args={['#202030', 10, 25]} /> */}

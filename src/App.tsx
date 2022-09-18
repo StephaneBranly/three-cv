@@ -53,7 +53,7 @@ const App = () => {
           <nav className="menu">
             <ul>
              {planets.map((planet, i) => {
-                return <li key={i} onMouseEnter={() => setCurrentItem(i)}>{planet.name}</li>
+                return <li key={i} className={i===item?'selected':''} onMouseEnter={() => setCurrentItem(i)}>{planet.name}</li>
                })}
             </ul>
           </nav>

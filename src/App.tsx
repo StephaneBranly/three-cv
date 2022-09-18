@@ -43,10 +43,10 @@ const App = () => {
           <Stats />
           <OrbitControls />
           <Suspense fallback={<Loader />}>
-            <gridHelper />
-            <axesHelper />
+            {/* <gridHelper /> */}
+            {/* <axesHelper /> */}
             {renderCurrentPage3D()}
-            <ambientLight intensity={0.5} />
+            <ambientLight intensity={0.7} />
           </Suspense>
         </Canvas>
         <div id="overlay-content">

@@ -6,19 +6,20 @@ import LinuxBiolinum from 'fonts/LinuxBiolinum.json'
 import { useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
+import { planet } from 'types'
 
 
 export interface PlanetProps {
     selected: boolean
     position: [number, number, number]
     sphereArgs: [radius: number, widthSegments: number, heightSegments: number] 
-    name: string
+    planet: planet
     orientation: number
     lookAt: (position: [number, number, number]) => void
 }
 
 const Planet = (props: PlanetProps) => {
-    const { position, sphereArgs, name, lookAt, orientation, selected } = props
+    const { position, sphereArgs, planet, lookAt, orientation, selected } = props
 
     const { state, dispatch } = useGlobalContext()
 
@@ -46,12 +47,43 @@ const Planet = (props: PlanetProps) => {
             else setLastHoverTime(state.clock.getElapsedTime())
             setLastSelectedState(selected)
         }
-        if (selected || Math.abs(scale - 1) > 0.01) {
-            setTextPosition(new THREE.Vector3(0, 0-sphereArgs[0] - 0.5 + Math.sin(elapsedTime * 5) * 0.1, 0))
-            setScale(1 - Math.sin(elapsedTime * 5) * 0.05)
-        }
+        // if (selected || Math.abs(scale - 1) > 0.01) {
+        //     setTextPosition(new THREE.Vector3(0, 0-sphereArgs[0] - 0.5 + Math.sin(elapsedTime * 5) * 0.1, 0))
+        //     setScale(1 - Math.sin(elapsedTime * 5) * 0.05)
+        // }
     })
 
+    const alphaThetaToXYZ = (alpha: number, theta: number, radius: number) => {
+        return {
+            x: radius * Math.sin(alpha) * Math.cos(theta),
+            y: radius * Math.sin(alpha) * Math.sin(theta),
+            z: radius * Math.cos(alpha)
+        }
+    }
+
+    const renderVariant = (variant: Record<string, string|number>, index: number) => {
+        switch (variant.type) {
+            case 'ring':
+                return  (
+                    <mesh rotation={[Number(variant.rotationX),  Number(variant.rotationY), 0]}>
+                        <ringGeometry args={[sphereArgs[0] + Number(variant.radius), sphereArgs[0]  + Number(variant.radius) + Number(variant.width), 32]}/>
+                        <meshPhysicalMaterial attach='material' color={selected?'#BA0':'#d7d7d6'} side={THREE.DoubleSide} />
+                    </mesh>
+                )
+            case 'satellite':
+                const { x, y, z }= alphaThetaToXYZ(Number(variant.alpha), Number(variant.theta), sphereArgs[0] + Number(variant.distance))
+                return (
+                    <mesh position={[x,y,z]}>
+                        <sphereBufferGeometry args={[Number(variant.radius), 16, 16]} />
+                        <meshPhysicalMaterial attach='material'  color={selected?'#BA0':'#d7d7d6'}  />
+                    </mesh>
+                )
+            default: return null
+        }
+    }
+    const renderVariants = () => {
+        return planet.variants.map((variant, index) => renderVariant(variant, index))
+    }
     return (
         <group 
             onClick={() => lookAt(position)} 
@@ -61,11 +93,14 @@ const Planet = (props: PlanetProps) => {
             rotation={[0, (Math.PI/2-orientation)%(Math.PI*2), 0]}
             position={position}
         >
-            <mesh  scale={scale} receiveShadow>
-                <sphereBufferGeometry args={sphereArgs} />
-                <meshPhysicalMaterial attach='material' color={selected?'#FD0':'#f7f7f6'} />
-            </mesh>
-            <Text text={name} centerOrigin={true} color={selected?'#FD0':'#f7f7f6'} fontfile={LinuxBiolinum} meshProps={{position: textPosition, castShadow: true }} textGeometry={{size: 0.3, height: 0.03 }}/>
+            <group scale={scale}>
+                <mesh>
+                    <sphereBufferGeometry args={sphereArgs} />
+                    <meshPhysicalMaterial attach='material' color={selected?'#FD0':'#f7f7f6'} />
+                </mesh>
+                {renderVariants()}
+            </group>
+            <Text text={planet.name} centerOrigin={true} color={selected?'#FD0':'#f7f7f6'} fontfile={LinuxBiolinum} meshProps={{position: textPosition, castShadow: true }} textGeometry={{size: 0.3, height: 0.03 }}/>
       </group>
     )
   }

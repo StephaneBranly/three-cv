@@ -68,7 +68,7 @@ const Menu = (props: MenuProps) => {
         return planets.map((planet, index) => {
             const angle = index * (Math.PI * 2 / planets.length)
             const {x,y} = angleRadiusToXY(angle, 5+planet.radius+planet.z)
-            return <Planet selected={currentItem===index} position={[x, planet.z, y]} key={index} name={planet.name} lookAt={handlerChangeScene} sphereArgs={[planet.radius, 32, 32]} orientation={angle}/>
+            return <Planet planet={planet} selected={currentItem===index} position={[x, planet.z, y]} key={index} lookAt={handlerChangeScene} sphereArgs={[planet.radius, 32, 32]} orientation={angle}/>
         })
     }
 

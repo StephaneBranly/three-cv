@@ -1,5 +1,5 @@
 /* eslint-disable no-sequences */
-import { Suspense, useRef, Ref } from "react"
+import { Suspense, useRef, Ref, useState } from "react"
 import { Canvas, useFrame } from "react-three-fiber"
 import { Stats, OrbitControls } from "@react-three/drei"
 import * as THREE from "three"
@@ -11,7 +11,7 @@ import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { CovMatrix, Menu } from 'assets'
 import { Html, useProgress } from '@react-three/drei'
-import { GlobalContextProvider } from 'context'
+import { GlobalContextProvider, useGlobalContext } from 'context'
 
 function Loader() {
   const { progress } = useProgress()
@@ -122,23 +122,22 @@ const Poly = () => {
 
 const Scene = () => {
   return (
-    <>
+    <group
+    >
       <gridHelper />
       <axesHelper />
-      <Menu />
+      <Menu  />
       <ambientLight intensity={0.5} />
       {/* <pointLight intensity={1} position={[10, 5, 0]} distance={10} /> */}
-    </>
+    </group>
   )
 }
 
 const App = () => {
-
   return (
     <div
       className="App"
     >
-      <GlobalContextProvider>
         <Canvas
           // shadows
         >
@@ -150,7 +149,6 @@ const App = () => {
             <Scene />
           </Suspense>
         </Canvas>
-      </GlobalContextProvider>
     </div>
   )
 }

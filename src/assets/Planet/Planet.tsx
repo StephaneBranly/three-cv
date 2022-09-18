@@ -12,13 +12,14 @@ export interface PlanetProps {
     position: [number, number, number]
     sphereArgs: [radius: number, widthSegments: number, heightSegments: number] 
     name: string
+    textOrientation: [number, number, number]
     lookAt: (position: [number, number, number]) => void
 }
 
 const Planet = (props: PlanetProps) => {
-    const { position, sphereArgs, name, lookAt } = props
+    const { position, sphereArgs, name, lookAt, textOrientation } = props
 
-    const [state, dispatch] = useGlobalContext()
+    const { state, dispatch } = useGlobalContext()
 
     const [clicked, setClicked] = useState(false)
     const [hovered, setHovered] = useState(false)
@@ -49,7 +50,7 @@ const Planet = (props: PlanetProps) => {
                 <sphereBufferGeometry args={sphereArgs} />
                 <meshPhysicalMaterial attach='material' color={hovered?'#FD0':'#f7f7f6'} />
             </mesh>
-            <Text text={name} centerOrigin={true} color={hovered?'#FD0':'#f7f7f6'} fontfile={LinuxBiolinum} meshProps={{position: textPosition, castShadow: true}} textGeometry={{size: 0.3, height: 0.03 }}/>
+            <Text text={name} centerOrigin={true} color={hovered?'#FD0':'#f7f7f6'} fontfile={LinuxBiolinum} meshProps={{position: textPosition, castShadow: true, rotation: textOrientation}} textGeometry={{size: 0.3, height: 0.03 }}/>
       </group>
     )
   }

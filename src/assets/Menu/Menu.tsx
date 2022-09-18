@@ -12,7 +12,7 @@ export interface MenuProps {
 
 const Menu = (props: MenuProps) => {
     const cameraControls = useRef<CameraControls | null>(null)
-
+    const pointLight = useRef<THREE.PointLight | null>(null)
     const { currentItem } = props
     const { state, dispatch } = useGlobalContext()
 
@@ -22,6 +22,7 @@ const Menu = (props: MenuProps) => {
             y: Math.sin(angle) * radius
         }
     }
+
     const XYToAngleRadius  = (x: number, y: number) => {
         return {
             angle: Math.atan2(y, x),
@@ -29,6 +30,11 @@ const Menu = (props: MenuProps) => {
         }
     }
 
+    useEffect(() => {
+        if (cameraControls.current) {
+            cameraControls.current.enabled = false
+        }
+    }, [])
     const [lastMoveTime, setLastMoveTime] = useState(state.clock.getElapsedTime())
     const [lastItem, setLastItem] = useState(currentItem)
 
@@ -43,7 +49,7 @@ const Menu = (props: MenuProps) => {
             const { x: x_current, y: y_current } = angleRadiusToXY(currentItem * (Math.PI * 2 / planets.length), 15)
             
             const currentCameraPosition = cameraControls.current?.getPosition(new THREE.Vector3())
-            if (Math.sqrt(Math.pow(currentCameraPosition.x - x_current, 2) + Math.pow(currentCameraPosition.z - y_current, 2)) > 0.5) {
+            if (Math.sqrt(Math.pow(currentCameraPosition.x - x_current, 2) + Math.pow(currentCameraPosition.z - y_current, 2)) > 0.15) {
                 // if 
                 const targetAngle = Math.atan2(y_current, x_current)
 
@@ -53,6 +59,7 @@ const Menu = (props: MenuProps) => {
                 const rotationDelta = delta > Math.PI ? -Math.PI/128 : Math.PI/128
                 const {x, y} = angleRadiusToXY(currentAngle+rotationDelta, 15)
                 cameraControls.current?.setPosition(x,3,y)
+                pointLight.current?.position.set(x, 3, y)
             } else
                 setLastItem(currentItem)
         }
@@ -75,6 +82,7 @@ const Menu = (props: MenuProps) => {
     return (
         <group>
             <CameraControls ref={cameraControls} enabled={false} />
+            <pointLight intensity={1} ref={pointLight} distance={20} />
             <Stars />
             {renderPlanets()}
         </group>

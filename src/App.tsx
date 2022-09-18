@@ -46,7 +46,7 @@ const App = () => {
             {/* <gridHelper /> */}
             {/* <axesHelper /> */}
             {renderCurrentPage3D()}
-            <ambientLight intensity={0.7} />
+            <ambientLight intensity={0.1} />
           </Suspense>
         </Canvas>
         <div id="overlay-content">

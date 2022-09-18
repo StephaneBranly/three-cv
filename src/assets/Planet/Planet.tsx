@@ -100,7 +100,7 @@ const Planet = (props: PlanetProps) => {
                 </mesh>
                 {renderVariants()}
             </group>
-            <Text text={planet.name} centerOrigin={true} color={selected?'#FD0':'#f7f7f6'} fontfile={LinuxBiolinum} meshProps={{position: textPosition, castShadow: true }} textGeometry={{size: 0.3, height: 0.03 }}/>
+            {selected && <Text text={planet.name} centerOrigin={true} color={selected?'#FD0':'#f7f7f6'} fontfile={LinuxBiolinum} meshProps={{position: textPosition, castShadow: true }} textGeometry={{size: 0.3, height: 0.03 }}/>}
       </group>
     )
   }

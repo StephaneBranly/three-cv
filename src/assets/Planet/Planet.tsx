@@ -3,11 +3,10 @@ import { useCursor } from '@react-three/drei'
 import { Text } from 'assets'
 import { useGlobalContext } from 'context'
 import LinuxBiolinum from 'fonts/LinuxBiolinum.json'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
 import { planet, variant } from 'types'
-
 
 export interface PlanetProps {
     selected: boolean
@@ -32,6 +31,7 @@ const Planet = (props: PlanetProps) => {
     const [lastHoverTime, setLastHoverTime] = useState(state.clock.getElapsedTime())
     useCursor(hovered)
     const groupRef = useRef<THREE.Group>(null)
+
 
     // const handlerSetHovered = (value: boolean) => {
     //     if (!value) setTextPosition(new THREE.Vector3(0, 0-sphereArgs[0] - 0.5, 0))

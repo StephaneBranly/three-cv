@@ -11,3 +11,37 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+#overlay-content {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.01);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin: 0.5em;
+  padding: 0.5em;
+  transition: all 0.2s ease-in-out;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.2em;
+  &:hover{
+    cursor: pointer;
+    scale: 1.2;
+    border-color:rgba(255, 255, 255, 0.4);
+    transform: translateX(1em);
+  }
+}

@@ -1,3 +1,4 @@
-import { planet } from './planet';
+import { planet } from './planet'
+import { variant } from './variant'
 
-export { planet }
+export { planet, variant }

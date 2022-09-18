@@ -1,37 +1,53 @@
-import { useMemo, useRef } from "react"
+import { useMemo } from "react"
 import * as THREE from "three"
+import flare from 'textures/starFlare.jpg'
+import { useLoader } from "react-three-fiber"
 
 const Stars = () => {
-    let group = useRef<THREE.Group | null>()
-    let theta = 0
-    // useFrame(() => {
-    //   if (group.current) {
-    //     // Some things maybe shouldn't be declarative, we're in the render-loop here with full access to the instance
-    //     const r = 5 * Math.sin(THREE.Math.degToRad((theta += 0.01)))
-    //     const s = Math.cos(THREE.Math.degToRad(theta * 2))
-    //     group.current!.rotation.set(r, r, r)
-    //     group.current!.scale.set(s, s, s)
-    //   }
-    // })
-    const colors = ['#F44336', '#5E3DE2', '#41C6FE', '#FED147', '#FFCCBC']
+    const XYZToThetaPhi = (x: number, y: number, z: number) => {
+        const r = Math.sqrt(x * x + y * y + z * z)
+        const theta = Math.acos(z / r)
+        const phi = Math.atan2(y, x)
+        return {
+            theta, phi
+        }
+    }
+    const colors = ['#B44336', '#5E2D92', '#4106DE', '#AEB147', '#FFCCBC']
+    const texture = useLoader(THREE.TextureLoader, flare)
     const [geo, mats, coords] = useMemo(() => {
       const geo = new THREE.SphereBufferGeometry(0.3, 10, 10)
       const mats = colors.map((color) => new THREE.MeshBasicMaterial({ color }))
-      
       const coords = new Array(1000)
         .fill(0)
-        .map(i => [
-          Math.random() * 800 - 400,
-          Math.random() * 800 - 400,
-          Math.random() * 800 - 400,
-          Math.floor(Math.random() * colors.length)
-        ])
+        .map(i => {
+          const x = (Math.random() - 0.5) * 1000
+          const y = (Math.random() - 0.5) * 1000
+          const z = (Math.random() - 0.5) * 1000
+          const flare = Math.random() * 40
+          const { theta, phi } = XYZToThetaPhi(x, y, z)
+          return [
+          x,
+          y,
+          z,
+          Math.floor(Math.random() * colors.length),
+          flare,
+          theta,
+          phi
+        ]})
       return [geo, mats, coords]
     }, [])
     return (
       <group > 
-        {coords.map(([p1, p2, p3, colorIndex], i) => (
-          <mesh key={i} geometry={geo} material={mats[colorIndex]} position={[p1, p2, p3]} />
+        {coords.map(([p1, p2, p3, colorIndex, flare, theta, phi], i) => (
+          <group key={i} position={[p1, p2, p3]}>
+            {flare > 25 && Math.abs(p1) > 20 && Math.abs(p3) > 20 && 
+              <mesh rotation={[theta, 0, phi]}>
+                <planeBufferGeometry attach="geometry" args={[flare, flare]} />
+                <meshLambertMaterial attach="material"  color={colors[colorIndex]} map={texture} alphaMap={texture} transparent={true} side={THREE.DoubleSide} />
+              </mesh>
+            }
+            <mesh geometry={geo} material={mats[colorIndex]}  />
+          </group>
         ))}
       </group>
     )

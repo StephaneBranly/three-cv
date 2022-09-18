@@ -23,7 +23,7 @@ const planets: planet[] = [
             {type: 'satellite', radius: 0.2, distance: 1, alpha: 0.5, theta: 0.5},
             {type: 'satellite', radius: 0.21, distance: 1, alpha: 2.5, theta: -3},
             {type: 'satellite', radius: 0.27, distance: 1, alpha: -0.5, theta: 0.5},
-            {type: 'satellite', radius: 0.15, disƒtance: 1.1, alpha: 0.5, theta: 0},
+            {type: 'satellite', radius: 0.15, distance: 1.1, alpha: 0.5, theta: 0},
             {type: 'satellite', radius: 0.14, distance: 1, alpha: 0.5, theta: -0.3},
             {type: 'satellite', radius: 0.10, distance: 0.9, alpha: -5.2, theta: 4.3},
             {type: 'satellite', radius: 0.17, distance: 0.8, alpha: -3.5, theta: -0.3},

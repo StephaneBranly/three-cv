@@ -6,7 +6,7 @@ import LinuxBiolinum from 'fonts/LinuxBiolinum.json'
 import { useEffect, useRef, useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
-import { planet } from 'types'
+import { planet, variant } from 'types'
 
 
 export interface PlanetProps {
@@ -61,20 +61,20 @@ const Planet = (props: PlanetProps) => {
         }
     }
 
-    const renderVariant = (variant: Record<string, string|number>, index: number) => {
+    const renderVariant = (variant: variant, index: number) => {
         switch (variant.type) {
             case 'ring':
                 return  (
-                    <mesh rotation={[Number(variant.rotationX),  Number(variant.rotationY), 0]}>
-                        <ringGeometry args={[sphereArgs[0] + Number(variant.radius), sphereArgs[0]  + Number(variant.radius) + Number(variant.width), 32]}/>
+                    <mesh rotation={[variant.rotationX,  variant.rotationY, 0]}>
+                        <ringGeometry args={[sphereArgs[0] + variant.radius, sphereArgs[0]  + variant.radius + variant.width, 32]}/>
                         <meshPhysicalMaterial attach='material' color={selected?'#BA0':'#d7d7d6'} side={THREE.DoubleSide} />
                     </mesh>
                 )
             case 'satellite':
-                const { x, y, z }= alphaThetaToXYZ(Number(variant.alpha), Number(variant.theta), sphereArgs[0] + Number(variant.distance))
+                const { x, y, z }= alphaThetaToXYZ(variant.alpha, variant.theta, sphereArgs[0] + variant.distance)
                 return (
                     <mesh position={[x,y,z]}>
-                        <sphereBufferGeometry args={[Number(variant.radius), 16, 16]} />
+                        <sphereBufferGeometry args={[variant.radius, 16, 16]} />
                         <meshPhysicalMaterial attach='material'  color={selected?'#BA0':'#d7d7d6'}  />
                     </mesh>
                 )
@@ -96,7 +96,7 @@ const Planet = (props: PlanetProps) => {
             <group scale={scale}>
                 <mesh>
                     <sphereBufferGeometry args={sphereArgs} />
-                    <meshPhysicalMaterial attach='material' color={selected?'#FD0':'#f7f7f6'} />
+                    {/* <meshPhysicalMaterial attach='material' color={selected?'#FD0':'#f7f7f6'} /> */}
                 </mesh>
                 {renderVariants()}
             </group>

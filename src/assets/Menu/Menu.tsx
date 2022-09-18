@@ -40,16 +40,18 @@ const Menu = (props: MenuProps) => {
         else if (elapsedTime > 1 && elapsedTime < 6)
             cameraControls.current?.setPosition(0, 3, interpolate(1, 1000, 6, 15, elapsedTime))
         else if (cameraControls.current) {
-            // const { x, y } = angleRadiusToXY(elapsedTime * 0.1, 15)
-            const { x, y } = angleRadiusToXY(currentItem * (Math.PI * 2 / planets.length), 15)
-            // cameraControls.current?.setPosition(x, 3, y)
-            // setLastItem(currentItem)
-            // setLastMoveTime(elapsedTime)
+            const { x: x_current, y: y_current } = angleRadiusToXY(currentItem * (Math.PI * 2 / planets.length), 15)
+            
             const currentCameraPosition = cameraControls.current?.getPosition(new THREE.Vector3())
-            if (Math.sqrt(Math.pow(currentCameraPosition.x - x, 2) + Math.pow(currentCameraPosition.z - y, 2)) > 0.5) {
-                const currentAngle = Math.atan2(currentCameraPosition.z, currentCameraPosition.x)
+            if (Math.sqrt(Math.pow(currentCameraPosition.x - x_current, 2) + Math.pow(currentCameraPosition.z - y_current, 2)) > 0.5) {
                 // if 
-                const {x, y} = angleRadiusToXY(currentAngle+Math.PI/128, 15)
+                const targetAngle = Math.atan2(y_current, x_current)
+
+                const currentAngle = Math.atan2(currentCameraPosition.z, currentCameraPosition.x)
+                const delta = targetAngle - currentAngle < 0 ? targetAngle - currentAngle + Math.PI * 2 : targetAngle - currentAngle
+            
+                const rotationDelta = delta > Math.PI ? -Math.PI/128 : Math.PI/128
+                const {x, y} = angleRadiusToXY(currentAngle+rotationDelta, 15)
                 cameraControls.current?.setPosition(x,3,y)
             } else
                 setLastItem(currentItem)

@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-undef */
 import { useCursor } from '@react-three/drei'
 import { Text } from 'assets'
+import { useGlobalContext } from 'context'
 import LinuxBiolinum from 'fonts/LinuxBiolinum.json'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
 
@@ -17,22 +18,24 @@ export interface PlanetProps {
 const Planet = (props: PlanetProps) => {
     const { position, sphereArgs, name, lookAt } = props
 
+    const [state, dispatch] = useGlobalContext()
+
     const [clicked, setClicked] = useState(false)
     const [hovered, setHovered] = useState(false)
     const [textPosition, setTextPosition] = useState(new THREE.Vector3(position[0], position[1] - sphereArgs[0] - 0.5, position[2]))
     const [scale, setScale] = useState(1)
+    const [lastHoverTime, setLastHoverTime] = useState(state.clock.getElapsedTime())
     useCursor(hovered)
 
 
-    const [clock] = useMemo(() => [new THREE.Clock()], [])
 
     const handlerSetHovered = (value: boolean) => {
         if (!value) setTextPosition(new THREE.Vector3(position[0], position[1] - sphereArgs[0] - 0.5, position[2]))
-        else clock.start()
+        else setLastHoverTime(state.clock.getElapsedTime())
         setHovered(value)
     }
     useFrame(() => {
-        const elapsedTime = clock.getElapsedTime()
+        const elapsedTime = lastHoverTime - state.clock.getElapsedTime()
 
         if (hovered || Math.abs(scale - 1) > 0.01) {
             setTextPosition(new THREE.Vector3(position[0], position[1] - sphereArgs[0] - 0.5 + Math.sin(elapsedTime * 5) * 0.1, position[2]))

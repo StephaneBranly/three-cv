@@ -11,6 +11,7 @@ import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { CovMatrix, Menu } from 'assets'
 import { Html, useProgress } from '@react-three/drei'
+import { GlobalContextProvider } from 'context'
 
 function Loader() {
   const { progress } = useProgress()
@@ -137,17 +138,19 @@ const App = () => {
     <div
       className="App"
     >
-      <Canvas
-        // shadows
-      >
-        <color attach="background" args={['#202030']} />
-        {/* <fog attach="fog" args={['#202030', 10, 25]} /> */}
-        <Stats />
-        <OrbitControls />
-        <Suspense fallback={<Loader />}>
-          <Scene />
-        </Suspense>
-      </Canvas>
+      <GlobalContextProvider>
+        <Canvas
+          // shadows
+        >
+          <color attach="background" args={['#202030']} />
+          {/* <fog attach="fog" args={['#202030', 10, 25]} /> */}
+          <Stats />
+          <OrbitControls />
+          <Suspense fallback={<Loader />}>
+            <Scene />
+          </Suspense>
+        </Canvas>
+      </GlobalContextProvider>
     </div>
   )
 }

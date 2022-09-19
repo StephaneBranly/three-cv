@@ -6,6 +6,7 @@ import * as THREE from "three"
 import "./App.scss"
 
 import { Menu } from 'assets'
+import { Menu as MenuHTML } from 'components'
 import { Html, useProgress } from '@react-three/drei'
 import { planets } from "consts"
 
@@ -31,6 +32,15 @@ const App = () => {
         return <Menu currentItem={item}/>
     }
   }
+
+  const renderCurrentPageHTML = () => {
+    switch (currentPage) {
+      case 'Menu':
+        return <MenuHTML currentItem={item} setCurrentItem={setCurrentItem}/>
+      default:
+        return <MenuHTML currentItem={item} setCurrentItem={setCurrentItem}/>
+    }
+  }
   return (
     <div
       className="App"
@@ -50,13 +60,7 @@ const App = () => {
           </Suspense>
         </Canvas>
         <div id="overlay-content">
-          <nav className="menu">
-            <ul>
-             {planets.map((planet, i) => {
-                return <li key={i} className={i===item?'selected':''} onMouseEnter={() => setCurrentItem(i)}>{planet.name}</li>
-               })}
-            </ul>
-          </nav>
+          {renderCurrentPageHTML()}
         </div>
     </div>
   )

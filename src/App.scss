@@ -37,12 +37,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0);
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 0.2em;
+  user-select: none;
   &:hover, &.selected{
     cursor: pointer;
     scale: 1.2;
     border-color:rgba(255, 255, 255, 0.4);
-  background-color: rgba(0, 0, 0, 0.15);
-
+    background-color: rgba(0, 0, 0, 0.15);
     transform: translateX(1em);
   }
 }

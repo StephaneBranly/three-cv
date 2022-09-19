@@ -46,7 +46,7 @@ const Menu = (props: MenuProps) => {
         else if (elapsedTime > 1 && elapsedTime < 6)
             cameraControls.current?.setPosition(0, 3, interpolate(1, 1000, 6, 15, elapsedTime))
         else if (cameraControls.current) {
-            const { x: x_current, y: y_current } = angleRadiusToXY(currentItem * (Math.PI * 2 / planets.length), 15)
+            const { x: x_current, y: y_current } = angleRadiusToXY((planets.length - currentItem) * (Math.PI * 2 / planets.length), 15)
             
             const currentCameraPosition = cameraControls.current?.getPosition(new THREE.Vector3())
             if (Math.sqrt(Math.pow(currentCameraPosition.x - x_current, 2) + Math.pow(currentCameraPosition.z - y_current, 2)) > 0.15) {
@@ -73,7 +73,7 @@ const Menu = (props: MenuProps) => {
 
     const renderPlanets = () => {
         return planets.map((planet, index) => {
-            const angle = index * (Math.PI * 2 / planets.length)
+            const angle = (planets.length - index) * (Math.PI * 2 / planets.length)
             const {x,y} = angleRadiusToXY(angle, 5+planet.radius+planet.z)
             return <Planet planet={planet} selected={currentItem===index} position={[x, planet.z, y]} key={index} lookAt={handlerChangeScene} sphereArgs={[planet.radius, 32, 32]} orientation={angle}/>
         })

@@ -4,8 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useFrame } from "react-three-fiber"
 import * as THREE from 'three'
 import { interpolate } from "utils"
-import { planets } from "consts"
-
+import { planets,  startAnimation as sA } from "consts"
 export interface MenuProps {
     currentItem: number
 }
@@ -41,10 +40,10 @@ const Menu = (props: MenuProps) => {
     useFrame(() => {
         const elapsedTime = state.clock.getElapsedTime()
        
-        if (elapsedTime < 1)
-            cameraControls.current?.setPosition(0, 3, 1000)
-        else if (elapsedTime > 1 && elapsedTime < 6)
-            cameraControls.current?.setPosition(0, 3, interpolate(1, 1000, 6, 15, elapsedTime))
+        if (elapsedTime < sA.startTime)
+            cameraControls.current?.setPosition(sA.startDistance, 3, 0)
+        else if (elapsedTime > sA.startTime && elapsedTime < sA.endTime)
+            cameraControls.current?.setPosition(interpolate(sA.startTime, sA.startDistance, sA.endTime, sA.endDistance, elapsedTime), 3, 0)
         else if (cameraControls.current) {
             const { x: x_current, y: y_current } = angleRadiusToXY((planets.length - currentItem) * (Math.PI * 2 / planets.length), 15)
             

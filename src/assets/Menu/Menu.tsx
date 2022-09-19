@@ -34,8 +34,8 @@ const Menu = (props: MenuProps) => {
             cameraControls.current.enabled = false
         }
     }, [])
-    const [lastMoveTime, setLastMoveTime] = useState(state.clock.getElapsedTime())
-    const [lastItem, setLastItem] = useState(currentItem)
+
+    const [cameraRotating, setCameraRotating] = useState(false)
 
     useFrame(() => {
         const elapsedTime = state.clock.getElapsedTime()
@@ -49,7 +49,9 @@ const Menu = (props: MenuProps) => {
             
             const currentCameraPosition = cameraControls.current?.getPosition(new THREE.Vector3())
             if (Math.sqrt(Math.pow(currentCameraPosition.x - x_current, 2) + Math.pow(currentCameraPosition.z - y_current, 2)) > 0.15) {
-                // if 
+                if (!cameraRotating) {
+                    setCameraRotating(true)
+                }
                 const targetAngle = Math.atan2(y_current, x_current)
 
                 const currentAngle = Math.atan2(currentCameraPosition.z, currentCameraPosition.x)
@@ -59,8 +61,9 @@ const Menu = (props: MenuProps) => {
                 const {x, y} = angleRadiusToXY(currentAngle+rotationDelta, 15)
                 cameraControls.current?.setPosition(x,3,y)
                 pointLight.current?.position.set(x, 3, y)
-            } else
-                setLastItem(currentItem)
+            } else if (cameraRotating) {
+                setCameraRotating(false)
+            }
         }
     })
 
@@ -74,7 +77,16 @@ const Menu = (props: MenuProps) => {
         return planets.map((planet, index) => {
             const angle = (planets.length - index) * (Math.PI * 2 / planets.length)
             const {x,y} = angleRadiusToXY(angle, 5+planet.radius+planet.z)
-            return <Planet planet={planet} selected={currentItem===index} position={[x, planet.z, y]} key={index} lookAt={handlerChangeScene} sphereArgs={[planet.radius, 32, 32]} orientation={angle}/>
+            return <Planet 
+                        planet={planet} 
+                        selected={currentItem===index} 
+                        position={[x, planet.z, y]} 
+                        key={index} 
+                        lookAt={handlerChangeScene} 
+                        sphereArgs={[planet.radius, 32, 32]} 
+                        orientation={angle}
+                        cameraRotating={cameraRotating}
+                    />
         })
     }
 

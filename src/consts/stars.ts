@@ -7,6 +7,7 @@ const stars = isMobile ?
     flareScale: 40,
     flareOffset: 5,
     flareFilter: 35,
+    radius: .5,
 } : 
 {
     numberOfStars: 800,
@@ -14,6 +15,7 @@ const stars = isMobile ?
     flareScale: 40,
     flareOffset: 5,
     flareFilter: 30,
+    radius: .5,
 }
 
 export default stars

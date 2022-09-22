@@ -13,10 +13,10 @@ const Stars = () => {
             theta, phi
         }
     }
-    const colors = ['#B44336', '#5E2D92', '#4106DE', '#AEB147', '#FFCCBC']
+    const colors = ['#E92EFB', '#FF2079', '#440BD4', '#FFD300', '#13CA91', '#FF9472', '#DBDBDB', '#DBDBDB', '#DBDBDB']
     const texture = useLoader(THREE.TextureLoader, flare)
     const [geo, mats, coords] = useMemo(() => {
-      const geo = new THREE.SphereBufferGeometry(0.3, s.segments, s.segments)
+      const geo = new THREE.SphereBufferGeometry(s.radius, s.segments, s.segments)
       const mats = colors.map((color) => new THREE.MeshBasicMaterial({ color }))
       const coords = new Array(s.numberOfStars)
         .fill(0)

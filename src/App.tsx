@@ -48,7 +48,7 @@ const App = () => {
         <Canvas
           // shadows
         >
-          <color attach="background" args={['#202030']} />
+          <color attach="background" args={['#1A0560']} />
           {/* <fog attach="fog" args={['#202030', 10, 25]} /> */}
           <Stats />
           <OrbitControls />

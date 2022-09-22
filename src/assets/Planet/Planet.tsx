@@ -8,6 +8,7 @@ import { useFrame } from 'react-three-fiber'
 import * as THREE from 'three'
 import { planet, variant } from 'types'
 import { isMobile } from 'react-device-detect'
+import { alphaThetaToXYZ } from 'utils'
 
 export interface PlanetProps {
     selected: boolean
@@ -58,14 +59,6 @@ const Planet = (props: PlanetProps) => {
         }
     })
 
-    const alphaThetaToXYZ = (alpha: number, theta: number, radius: number) => {
-        return {
-            x: radius * Math.sin(alpha) * Math.cos(theta),
-            y: radius * Math.sin(alpha) * Math.sin(theta),
-            z: radius * Math.cos(alpha)
-        }
-    }
-
     const renderVariant = (variant: variant, index: number) => {
         switch (variant.type) {
             case 'ring':
@@ -75,10 +68,16 @@ const Planet = (props: PlanetProps) => {
                     </mesh>
                 )
             case 'satellite':
-                const { x, y, z }= alphaThetaToXYZ(variant.alpha, variant.theta, sphereArgs[0] + variant.distance)
+                const { x, y, z } = alphaThetaToXYZ(variant.alpha, variant.theta, sphereArgs[0] + variant.distance)
                 return (
                     <mesh position={[x,y,z]} material={variant.material}>
                         <sphereBufferGeometry args={[variant.radius, 16, 16]} />
+                    </mesh>
+                )
+            case 'circle':
+                return (
+                    <mesh rotation={[variant.rotationX,  variant.rotationY, 0]} material={variant.material}>
+                        <edgesGeometry args={[new THREE.CircleBufferGeometry(sphereArgs[0] + variant.radius, 32)]}/>
                     </mesh>
                 )
             default: return null

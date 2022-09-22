@@ -18,4 +18,12 @@ export type ring = {
     material?: THREE.Material,
 }
 
-export type variant = satellite | ring
+export type circle = {
+    type: 'circle',
+    radius: number,
+    rotationX: number,
+    rotationY: number,
+    material?: THREE.Material,
+}
+
+export type variant = satellite | ring | circle

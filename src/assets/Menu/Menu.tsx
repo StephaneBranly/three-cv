@@ -22,16 +22,11 @@ const Menu = (props: MenuProps) => {
         }
     }
 
-    const XYToAngleRadius  = (x: number, y: number) => {
-        return {
-            angle: Math.atan2(y, x),
-            radius: Math.sqrt(x*x + y*y)
-        }
-    }
-
     useEffect(() => {
         if (cameraControls.current) {
             cameraControls.current.enabled = false
+            // cameraControls.current?.setPosition(sA.startDistance, 3, 0)
+            // pointLight.current?.position.set(sA.endDistance, 3, 0)
         }
     }, [])
 
@@ -40,9 +35,7 @@ const Menu = (props: MenuProps) => {
     useFrame(() => {
         const elapsedTime = state.clock.getElapsedTime()
        
-        if (elapsedTime < sA.startTime)
-            cameraControls.current?.setPosition(sA.startDistance, 3, 0)
-        else if (elapsedTime > sA.startTime && elapsedTime < sA.endTime)
+        if (elapsedTime > sA.startTime && elapsedTime < sA.endTime)
             cameraControls.current?.setPosition(interpolate(sA.startTime, sA.startDistance, sA.endTime, sA.endDistance, elapsedTime), 3, 0)
         else if (cameraControls.current) {
             const { x: x_current, y: y_current } = angleRadiusToXY((planets.length - currentItem) * (Math.PI * 2 / planets.length), 15)
@@ -93,7 +86,7 @@ const Menu = (props: MenuProps) => {
     return (
         <group>
             <CameraControls ref={cameraControls} enabled={false} />
-            <pointLight intensity={1} ref={pointLight} distance={20} />
+            <pointLight intensity={0.8} ref={pointLight} distance={25} />
             <Stars />
             {renderPlanets()}
         </group>

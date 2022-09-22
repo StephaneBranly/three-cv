@@ -1,22 +1,39 @@
 {
   "files": {
     "main.css": "/three-cv/static/css/main.a7e1e054.css",
-    "main.js": "/three-cv/static/js/main.ce142c51.js",
+    "main.js": "/three-cv/static/js/main.b94ac91b.js",
     "static/js/787.24d795bd.chunk.js": "/three-cv/static/js/787.24d795bd.chunk.js",
+    "static/media/noise_normalmap.jpg": "/three-cv/static/media/noise_normalmap.17a7e91016c289f8dc89.jpg",
+    "static/media/skills_normalmap.jpg": "/three-cv/static/media/skills_normalmap.79b69362459cafbd5e31.jpg",
+    "static/media/me_normalmap.jpg": "/three-cv/static/media/me_normalmap.3159231578f7db7de068.jpg",
     "static/media/noiseTexture.jpg": "/three-cv/static/media/noiseTexture.f1f16d33744117c03b56.jpg",
+    "static/media/education_normalmap.jpg": "/three-cv/static/media/education_normalmap.709b2382bc083616ff88.jpg",
+    "static/media/experience_normalmap.jpg": "/three-cv/static/media/experience_normalmap.8d77688349aa9f0f4415.jpg",
     "static/media/experience.jpg": "/three-cv/static/media/experience.b4500bffd7cca1393fc9.jpg",
+    "static/media/experience_colormap.jpg": "/three-cv/static/media/experience_colormap.041a140ff829791970ac.jpg",
     "static/media/normalMap.jpg": "/three-cv/static/media/normalMap.74bd7bc09b7a6c4ca676.jpg",
     "static/media/skills.jpg": "/three-cv/static/media/skills.80826ee9253f5b00a86e.jpg",
+    "static/media/skills_colormap.jpg": "/three-cv/static/media/skills_colormap.f1249eef89388f3419dd.jpg",
     "static/media/tex.jpg": "/three-cv/static/media/tex.681c25c3169b74660e09.jpg",
+    "static/media/education_roughnessmap.jpg": "/three-cv/static/media/education_roughnessmap.ced433e8e3f69be24876.jpg",
+    "static/media/me_colormap.jpg": "/three-cv/static/media/me_colormap.f74f701fffdb52c58939.jpg",
+    "static/media/mering_transparencymap.jpg": "/three-cv/static/media/mering_transparencymap.0a53cff2fb8d8c828b48.jpg",
+    "static/media/projectsring_colormap.jpg": "/three-cv/static/media/projectsring_colormap.0b9ecaae9de15f836264.jpg",
+    "static/media/education_colormap.jpg": "/three-cv/static/media/education_colormap.620e431f19303c47c03f.jpg",
+    "static/media/education_emissivemap.jpg": "/three-cv/static/media/education_emissivemap.cd3e2dc4cd11ff623cca.jpg",
+    "static/media/mering_colormap.jpg": "/three-cv/static/media/mering_colormap.de99e8a20edbbfcea496.jpg",
+    "static/media/projectsring_transparencymap.jpg": "/three-cv/static/media/projectsring_transparencymap.baa2380172a57144fa5a.jpg",
     "static/media/education.jpg": "/three-cv/static/media/education.e016e3f0bb48d32f498f.jpg",
+    "static/media/projects_normalmap.jpg": "/three-cv/static/media/projects_normalmap.84c23036ac96817e1891.jpg",
+    "static/media/projects_colormap.jpg": "/three-cv/static/media/projects_colormap.8fc6b417ffa351150891.jpg",
     "static/media/starFlare.jpg": "/three-cv/static/media/starFlare.19433cae5217f8459c4c.jpg",
     "index.html": "/three-cv/index.html",
     "main.a7e1e054.css.map": "/three-cv/static/css/main.a7e1e054.css.map",
-    "main.ce142c51.js.map": "/three-cv/static/js/main.ce142c51.js.map",
+    "main.b94ac91b.js.map": "/three-cv/static/js/main.b94ac91b.js.map",
     "787.24d795bd.chunk.js.map": "/three-cv/static/js/787.24d795bd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a7e1e054.css",
-    "static/js/main.ce142c51.js"
+    "static/js/main.b94ac91b.js"
   ]
 }

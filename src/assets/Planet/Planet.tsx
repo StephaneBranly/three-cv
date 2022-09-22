@@ -63,20 +63,20 @@ const Planet = (props: PlanetProps) => {
         switch (variant.type) {
             case 'ring':
                 return  (
-                    <mesh rotation={[variant.rotationX,  variant.rotationY, 0]} material={variant.material}>
+                    <mesh key={index} rotation={[variant.rotationX,  variant.rotationY, 0]} material={variant.material}>
                         <ringGeometry args={[sphereArgs[0] + variant.radius, sphereArgs[0]  + variant.radius + variant.width, 32]}/>
                     </mesh>
                 )
             case 'satellite':
                 const { x, y, z } = alphaThetaToXYZ(variant.alpha, variant.theta, sphereArgs[0] + variant.distance)
                 return (
-                    <mesh position={[x,y,z]} material={variant.material}>
+                    <mesh key={index} position={[x,y,z]} material={variant.material}>
                         <sphereBufferGeometry args={[variant.radius, 16, 16]} />
                     </mesh>
                 )
             case 'circle':
                 return (
-                    <mesh rotation={[variant.rotationX,  variant.rotationY, 0]} material={variant.material}>
+                    <mesh key={index} rotation={[variant.rotationX,  variant.rotationY, 0]} material={variant.material}>
                         <edgesGeometry args={[new THREE.CircleBufferGeometry(sphereArgs[0] + variant.radius, 32)]}/>
                     </mesh>
                 )
@@ -96,7 +96,7 @@ const Planet = (props: PlanetProps) => {
             position={position}
         >
             <group scale={scale}>
-                <mesh material={planet.material}>
+                <mesh material={planet.material} rotation={[0,-Math.PI/2,0]}>
                     <sphereBufferGeometry args={sphereArgs} />
                 </mesh>
                 {renderVariants()}

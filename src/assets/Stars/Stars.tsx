@@ -41,10 +41,10 @@ const Stars = () => {
       <group > 
         {coords.map(([p1, p2, p3, colorIndex, flare, theta, phi], i) => (
           <group key={i} position={[p1, p2, p3]}>
-              {flare > s.flareFilter && <mesh rotation={[theta, 0, phi]}>
+              {/* {flare > s.flareFilter && <mesh rotation={[theta, 0, phi]}>
                 <planeBufferGeometry attach="geometry" args={[flare, flare]} />
                 <meshLambertMaterial attach="material" color={colors[colorIndex]} map={texture} alphaMap={texture} transparent={true} side={THREE.DoubleSide} />
-              </mesh>}
+              </mesh>} */}
             <mesh geometry={geo} material={mats[colorIndex]}  />
           </group>
         ))}

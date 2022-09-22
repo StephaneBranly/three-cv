@@ -1,16 +1,8 @@
 import { planet } from "types"
 import * as THREE from "three"
-import tex from "textures/tex.jpg"
-import normalMap from "textures/normalMap.jpg"
-import noiseTexture from "textures/noiseTexture.jpg"
-import skills from "textures/skills.jpg"
-import education from "textures/education.jpg"
-import experience from "textures/experience.jpg"
-
 
 import educationColorMap from "textures/education_colormap.jpg"
 import educationEmissiveMap from "textures/education_emissivemap.jpg"
-import educationRoughnessMap from "textures/education_roughnessmap.jpg"
 import educationNormalMap from "textures/education_normalmap.jpg"
 
 import projectsColorMap from "textures/projects_colormap.jpg"
@@ -33,7 +25,6 @@ import noiseNormalMap from "textures/noise_normalmap.jpg"
 
 const educationColorMapTexture = new THREE.TextureLoader().load(educationColorMap)
 const educationEmissiveMapTexture = new THREE.TextureLoader().load(educationEmissiveMap)
-const educationRoughnessMapTexture = new THREE.TextureLoader().load(educationRoughnessMap)
 const educationNormalMapTexture = new THREE.TextureLoader().load(educationNormalMap)
 
 const projectsColorMapTexture = new THREE.TextureLoader().load(projectsColorMap)
@@ -54,13 +45,6 @@ const skillsNormalMapTexture = new THREE.TextureLoader().load(skillsNormalMap)
 
 const noiseNormalMapTexture = new THREE.TextureLoader().load(noiseNormalMap)
 
-const texBg = new THREE.TextureLoader().load(tex)
-const normalMapTex = new THREE.TextureLoader().load(normalMap)
-const noiseTextureTex = new THREE.TextureLoader().load(noiseTexture)
-const skillsTex = new THREE.TextureLoader().load(skills)
-const educationTex = new THREE.TextureLoader().load(education)
-const experienceTex = new THREE.TextureLoader().load(experience)
-
 const planets: planet[] = [
     {
         name: 'Me',
@@ -73,7 +57,7 @@ const planets: planet[] = [
                 width: .4,
                 rotationX: Math.PI/5,
                 rotationY: Math.PI/7,
-                material: new THREE.MeshStandardMaterial({ 
+                material: new THREE.MeshPhongMaterial({ 
                     map: meRingColorMapTexture,
                     transparent: true,
                     opacity: .9,
@@ -82,11 +66,9 @@ const planets: planet[] = [
                 })
             },
         ],
-        material: new THREE.MeshStandardMaterial({ 
+        material: new THREE.MeshPhongMaterial({ 
             map: meColorMapTexture,
             normalMap: meNormalMapTexture, 
-            roughness: .4, 
-            metalness: .5, 
             normalScale: new THREE.Vector2(.5, .5) 
         }),
     },
@@ -94,10 +76,8 @@ const planets: planet[] = [
         name: 'Experience',
         z: 0.5,
         radius: 1,
-        material: new THREE.MeshStandardMaterial({
+        material: new THREE.MeshPhongMaterial({
             map: experienceColorMapTexture,
-            roughness: .2,
-            metalness: .5,
             normalMap: experienceNormalMapTexture,
             normalScale: new THREE.Vector2(.5, .5)
         }),
@@ -108,7 +88,7 @@ const planets: planet[] = [
                 width: .05,
                 rotationX: Math.PI/4,
                 rotationY: Math.PI/6,
-                material: new THREE.MeshStandardMaterial({ color: '#3fd', side: THREE.DoubleSide, emissive: '#3fd', emissiveIntensity: 0.2 })
+                material: new THREE.MeshPhongMaterial({ color: '#3fd', side: THREE.DoubleSide, emissive: '#3fd', emissiveIntensity: 0.2 })
             },
             {
                 type: 'ring',
@@ -116,7 +96,7 @@ const planets: planet[] = [
                 width: .05,
                 rotationX: -Math.PI/2,
                 rotationY: Math.PI/6,
-                material: new THREE.MeshStandardMaterial({ color: '#ff2', side: THREE.DoubleSide, emissive: '#ff2', emissiveIntensity: 0.2 })
+                material: new THREE.MeshPhongMaterial({ color: '#ff2', side: THREE.DoubleSide, emissive: '#ff2', emissiveIntensity: 0.2 })
             },
         ],
     },
@@ -191,11 +171,9 @@ const planets: planet[] = [
         //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
         //     },
         // ],
-        material: new THREE.MeshStandardMaterial({ 
+        material: new THREE.MeshPhongMaterial({ 
             map: skillsColorMapTexture,
             normalMap: skillsNormalMapTexture, 
-            roughness: .4, 
-            metalness: .5, 
             normalScale: new THREE.Vector2(.5, .5) 
         }),
     },
@@ -204,13 +182,10 @@ const planets: planet[] = [
         z: 2,
         radius: 1.3,
         variants: [],
-        material: new THREE.MeshStandardMaterial({ 
+        material: new THREE.MeshPhongMaterial({ 
             map: educationColorMapTexture, 
-            roughnessMap: educationRoughnessMapTexture,
             emissiveMap: educationEmissiveMapTexture,
             normalMap: educationNormalMapTexture,
-            roughness: .1, 
-            metalness: .1, 
             normalScale: new THREE.Vector2(.4, .4)
         }),
     },
@@ -225,7 +200,7 @@ const planets: planet[] = [
                 width: 0.9, 
                 rotationX: Math.PI/6, 
                 rotationY: Math.PI/7,
-                material: new THREE.MeshStandardMaterial({ 
+                material: new THREE.MeshPhongMaterial({ 
                     map: projectsRingColorMapTexture,
                     transparent: true,
                     opacity: 0.8,
@@ -234,15 +209,13 @@ const planets: planet[] = [
                 })
             },
         ],
-        material: new THREE.MeshStandardMaterial(
+        material: new THREE.MeshPhongMaterial(
             { 
                 color: '#20d0C4',
                 map: projectsColorMapTexture,
                 normalMap: projectsNormalMapTexture, 
                 emissive: '#1010D4',
                 emissiveIntensity: 0.2,
-                roughness: .2,
-                metalness: .5,
                 normalScale: new THREE.Vector2(.5, .5)
             }),
     },
@@ -257,7 +230,7 @@ const planets: planet[] = [
                 distance: 1.5,
                 alpha: 0.5,
                 theta: 0.5,
-                material: new THREE.MeshStandardMaterial({ color: '#bb03b3', emissive: '#bb03b3', emissiveIntensity: 0.7 }),
+                material: new THREE.MeshPhongMaterial({ color: '#bb03b3', emissive: '#bb03b3', emissiveIntensity: 0.7 }),
             },
             {
                 type: 'satellite',
@@ -265,7 +238,7 @@ const planets: planet[] = [
                 distance: 1.5,
                 alpha: Math.PI/3,
                 theta: Math.PI/6,
-                material: new THREE.MeshStandardMaterial({ color: '#bbf033', emissive: '#bbf033', emissiveIntensity: 0.7 }),
+                material: new THREE.MeshPhongMaterial({ color: '#bbf033', emissive: '#bbf033', emissiveIntensity: 0.7 }),
             },
             {
                 type: 'satellite',
@@ -273,7 +246,7 @@ const planets: planet[] = [
                 distance: 1.5,
                 alpha: Math.PI/4*3,
                 theta: Math.PI,
-                material: new THREE.MeshStandardMaterial({ color: '#1DA1F2', emissive: '#1DA1F2', emissiveIntensity: 0.7 }),
+                material: new THREE.MeshPhongMaterial({ color: '#1DA1F2', emissive: '#1DA1F2', emissiveIntensity: 0.7 }),
             },
             {
                 type: 'satellite',
@@ -281,14 +254,12 @@ const planets: planet[] = [
                 distance: 1.2,
                 alpha: Math.PI,
                 theta: -Math.PI/2,
-                material: new THREE.MeshStandardMaterial({ color: '#0075bf', emissive: '#0075bf', emissiveIntensity: 0.7 }),
+                material: new THREE.MeshPhongMaterial({ color: '#0075bf', emissive: '#0075bf', emissiveIntensity: 0.7 }),
             }
         ],
-        material: new THREE.MeshStandardMaterial({ 
+        material: new THREE.MeshPhongMaterial({ 
             color: '#f025ff',
-            normalMap: noiseNormalMapTexture, 
-            roughness: .8,
-            metalness: .5,
+            normalMap: noiseNormalMapTexture,
             normalScale: new THREE.Vector2(.5, .5)
         }),
     }

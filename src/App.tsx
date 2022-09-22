@@ -8,11 +8,10 @@ import "./App.scss"
 import { Menu } from 'assets'
 import { Menu as MenuHTML } from 'components'
 import { Html, useProgress } from '@react-three/drei'
-import { planets } from "consts"
 
 function Loader() {
   const { progress } = useProgress()
-  return <Html center>{progress} % loaded</Html>
+  return <Html><div id='loading'>{progress} % loaded</div></Html>
 }
 
 const App = () => {
@@ -48,7 +47,7 @@ const App = () => {
         <Canvas
           // shadows
         >
-          <color attach="background" args={['#1A0560']} />
+          {/* <color attach="background" args={['#1A0570']} /> */}
           {/* <fog attach="fog" args={['#202030', 10, 25]} /> */}
           <Stats />
           <OrbitControls />

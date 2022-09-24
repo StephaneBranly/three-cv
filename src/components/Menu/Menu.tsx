@@ -1,4 +1,4 @@
-import { planets } from "consts"
+import { menu } from "consts"
 
 export interface MenuProps {
     currentItem: number
@@ -7,12 +7,12 @@ export interface MenuProps {
 
 const Menu = (props: MenuProps) => {
     const { currentItem, setCurrentItem } = props
-
+    
     return (
         <nav className="menu">
             <ul>
-             {planets.map((planet, i) => {
-                return <li key={i} className={`${i===currentItem?'selected':''} ${planet.name}`} onMouseEnter={() => setCurrentItem(i)}>{planet.name}</li>
+             {menu.map((item, i) => {
+                return <li key={i} className={`${i===currentItem?'selected':''}`} onMouseEnter={() => setCurrentItem(i)}>{item.name}</li>
                })}
             </ul>
         </nav>

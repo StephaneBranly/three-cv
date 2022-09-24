@@ -46,36 +46,19 @@ const skillsNormalMapTexture = new THREE.TextureLoader().load(skillsNormalMap)
 const noiseNormalMapTexture = new THREE.TextureLoader().load(noiseNormalMap)
 
 const planets: planet[] = [
+    // {
+    //     position: [0, 0, 0],
+    //     radius: 4,
+    //     variants: [],
+    //     material: new THREE.MeshPhongMaterial({ 
+    //         map: meColorMapTexture,
+    //         normalMap: meNormalMapTexture, 
+    //         normalScale: new THREE.Vector2(.5, .5) 
+    //     }),
+    // },
     {
-        name: 'Me',
-        z: 1,
-        radius: 0.8,
-        variants: [
-            {
-                type: 'ring',
-                radius: .2,
-                width: .4,
-                rotationX: Math.PI/5,
-                rotationY: Math.PI/7,
-                material: new THREE.MeshPhongMaterial({ 
-                    map: meRingColorMapTexture,
-                    transparent: true,
-                    opacity: .9,
-                    alphaMap: meRingTransparencylMapTexture, 
-                    side: THREE.DoubleSide, 
-                })
-            },
-        ],
-        material: new THREE.MeshPhongMaterial({ 
-            map: meColorMapTexture,
-            normalMap: meNormalMapTexture, 
-            normalScale: new THREE.Vector2(.5, .5) 
-        }),
-    },
-    {
-        name: 'Experience',
-        z: 0.5,
-        radius: 1,
+        position: [66, -11, 54],
+        radius: 5,
         material: new THREE.MeshPhongMaterial({
             map: experienceColorMapTexture,
             normalMap: experienceNormalMapTexture,
@@ -84,16 +67,16 @@ const planets: planet[] = [
         variants: [
             {
                 type: 'ring',
-                radius: .5,
-                width: .05,
+                radius: 2.5,
+                width: .25,
                 rotationX: Math.PI/4,
                 rotationY: Math.PI/6,
                 material: new THREE.MeshPhongMaterial({ color: '#3fd', side: THREE.DoubleSide, emissive: '#3fd', emissiveIntensity: 0.2 })
             },
             {
                 type: 'ring',
-                radius: .6,
-                width: .05,
+                radius: 3,
+                width: .25,
                 rotationX: -Math.PI/2,
                 rotationY: Math.PI/6,
                 material: new THREE.MeshPhongMaterial({ color: '#ff2', side: THREE.DoubleSide, emissive: '#ff2', emissiveIntensity: 0.2 })
@@ -101,76 +84,9 @@ const planets: planet[] = [
         ],
     },
     {
-        name: 'Skills',
-        z: 1.2,
-        radius: 1.1,
+        position: [-24, -9, 43],
+        radius: 4.1,
         variants: [],
-        // variants: [
-        //     {
-        //         type: 'satellite',
-        //         radius: 0.2,
-        //         distance: 1,
-        //         alpha: 0.5,
-        //         theta: 0.5,
-        //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
-        //     },
-        //     {
-        //         type: 'satellite',
-        //         radius: 0.21,
-        //         distance: 1,
-        //         alpha: 2.5,
-        //         theta: -3,
-        //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
-        //     },
-        //     {
-        //         type: 'satellite',
-        //         radius: 0.27,
-        //         distance: 1,
-        //         alpha: -0.5,
-        //         theta: 0.5,
-        //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
-        //     },
-        //     {
-        //         type: 'satellite',
-        //         radius: 0.15,
-        //         distance: 1.1,
-        //         alpha: 0.5,
-        //         theta: 0,
-        //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
-        //     },
-        //     {
-        //         type: 'satellite',
-        //         radius: 0.14,
-        //         distance: 1,
-        //         alpha: 0.5,
-        //         theta: -0.3,
-        //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
-        //     },
-        //     {
-        //         type: 'satellite',
-        //         radius: 0.10,
-        //         distance: 0.9,
-        //         alpha: -5.2,
-        //         theta: 4.3,
-        //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
-        //     },
-        //     {
-        //         type: 'satellite',
-        //         radius: 0.17,
-        //         distance: 0.8,
-        //         alpha: -3.5,
-        //         theta: -0.3,
-        //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
-        //     },
-        //     {
-        //         type: 'satellite',
-        //         radius: 0.17,
-        //         distance: 0.8,
-        //         alpha: 1,
-        //         theta: -3,
-        //         material: new THREE.MeshStandardMaterial({ normalMap: noiseNormalMapTexture, roughness: 0.8, metalness: 0.5, normalScale: new THREE.Vector2(0.5, 0.5) }),
-        //     },
-        // ],
         material: new THREE.MeshPhongMaterial({ 
             map: skillsColorMapTexture,
             normalMap: skillsNormalMapTexture, 
@@ -178,9 +94,8 @@ const planets: planet[] = [
         }),
     },
     {
-        name: 'Education',
-        z: 2,
-        radius: 1.3,
+        position: [-45, 0, -58],
+        radius: 5.2,
         variants: [],
         material: new THREE.MeshPhongMaterial({ 
             map: educationColorMapTexture, 
@@ -190,14 +105,13 @@ const planets: planet[] = [
         }),
     },
     {
-        name: 'Projects',
-        z: 1.2,
-        radius: 1,
+        position: [-99, 0, 19],
+        radius: 5,
         variants: [
             {
                 type: 'ring', 
-                radius: 0.2, 
-                width: 0.9, 
+                radius: 2, 
+                width: 4.5, 
                 rotationX: Math.PI/6, 
                 rotationY: Math.PI/7,
                 material: new THREE.MeshPhongMaterial({ 
@@ -220,38 +134,37 @@ const planets: planet[] = [
             }),
     },
     {
-        name: 'Contact',
-        z: 0.5,
-        radius: 0.7,
+        position: [25, 8, -30],
+        radius: 3.5,
         variants: [
             {
                 type: 'satellite',
-                radius: 0.2,
-                distance: 1.5,
+                radius: 1,
+                distance: 7.5,
                 alpha: 0.5,
                 theta: 0.5,
                 material: new THREE.MeshPhongMaterial({ color: '#bb03b3', emissive: '#bb03b3', emissiveIntensity: 0.7 }),
             },
             {
                 type: 'satellite',
-                radius: 0.3,
-                distance: 1.5,
+                radius: 1.5,
+                distance: 7.5,
                 alpha: Math.PI/3,
                 theta: Math.PI/6,
                 material: new THREE.MeshPhongMaterial({ color: '#bbf033', emissive: '#bbf033', emissiveIntensity: 0.7 }),
             },
             {
                 type: 'satellite',
-                radius: 0.3,
-                distance: 1.5,
+                radius: 1.5,
+                distance: 7.5,
                 alpha: Math.PI/4*3,
                 theta: Math.PI,
                 material: new THREE.MeshPhongMaterial({ color: '#1DA1F2', emissive: '#1DA1F2', emissiveIntensity: 0.7 }),
             },
             {
                 type: 'satellite',
-                radius: 0.15,
-                distance: 1.2,
+                radius: 0.75,
+                distance: 6,
                 alpha: Math.PI,
                 theta: -Math.PI/2,
                 material: new THREE.MeshPhongMaterial({ color: '#0075bf', emissive: '#0075bf', emissiveIntensity: 0.7 }),
@@ -262,6 +175,17 @@ const planets: planet[] = [
             normalMap: noiseNormalMapTexture,
             normalScale: new THREE.Vector2(.5, .5)
         }),
+    },
+    {
+        position: [92, 0, 92],
+        radius: 2,
+        variants: [],
+        material: new THREE.MeshPhongMaterial({
+            color: '#f0f50f',
+            emissive: '#f0b500',
+            emissiveIntensity: 1,
+            normalMap: noiseNormalMapTexture,
+        })
     }
 ]
 

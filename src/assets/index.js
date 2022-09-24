@@ -6,4 +6,6 @@ import Menu from "./Menu/Menu"
 import Planet from "./Planet/Planet"
 import Stars from "./Stars/Stars"
 import CameraControls from "./CameraControls/CameraControls"
-export { Text, Room, CovBox, CovMatrix, Menu, Planet, Stars, CameraControls }
+import Planets from "./Planets/Planets"
+
+export { Text, Room, CovBox, CovMatrix, Menu, Planet, Stars, CameraControls, Planets }

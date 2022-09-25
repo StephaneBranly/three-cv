@@ -23,17 +23,7 @@ export const menu = [
         name: 'Education',
         alpha: Math.PI/2,
         theta: Math.PI
-    },
-    { 
-        name: 'At',
-        alpha: Math.PI,
-        theta: 0
-    },
-    { 
-        name: 'At',
-        alpha: -Math.PI/2,
-        theta: Math.PI/2
-    },
+    }
 ]
 
 export default menu

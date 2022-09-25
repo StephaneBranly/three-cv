@@ -44,9 +44,7 @@ const App = () => {
     <div
       className="App"
     >
-        <Canvas
-          // shadows
-        >
+        <Canvas>
           {/* <color attach="background" args={['#1A0570']} /> */}
           {/* <fog attach="fog" args={['#202030', 10, 25]} /> */}
           <Stats />

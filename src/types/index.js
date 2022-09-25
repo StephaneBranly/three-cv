@@ -1,4 +1,4 @@
 import { planet } from './planet'
 import { variant } from './variant'
-
-export { planet, variant }
+import { itemPosition } from './itemPosition'
+export { planet, variant, itemPosition }

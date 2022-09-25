@@ -1,11 +1,15 @@
-import { CameraControls, Planet, Planets, Stars } from "assets"
+import { CameraControls, MainPlanet, Planet, Planets, Stars } from "assets"
 import { useGlobalContext } from "context"
 import { useEffect, useRef, useState } from "react"
-import { useFrame } from "react-three-fiber"
+import { useFrame, useLoader } from "react-three-fiber"
 import * as THREE from 'three'
 import { alphaThetaToXYZ, interpolate } from "utils"
 import { menu, planets,  startAnimation as sA } from "consts"
+
+
+
 import { MeshPhongMaterial } from "three"
+import { OBJLoader } from "three-stdlib"
 export interface MenuProps {
     currentItem: number
 }
@@ -15,6 +19,7 @@ const Menu = (props: MenuProps) => {
     const pointLight = useRef<THREE.PointLight | null>(null)
     const { currentItem } = props
     const { state, dispatch } = useGlobalContext()
+    const obj = useLoader(OBJLoader, './models/space_station.obj')
 
     const angleRadiusToXY = (angle: number, radius: number) => {
         return {
@@ -72,34 +77,13 @@ const Menu = (props: MenuProps) => {
         // }
     })
 
-    const renderItem = (alpha: number, theta: number, i: number) => {
-        const { x, y, z } = alphaThetaToXYZ(alpha, theta, 5)
-        // const { x, y, z } = alphaThetaToXYZ(alpha, theta, 4)
-        return <group><mesh position={[x,y,z]}>
-        <sphereBufferGeometry args={[0.1, 64, 64]} />
-        <meshLambertMaterial attach='material' color={0xf02020} />
-        </mesh>
-        <pointLight color='#f22' position={[x,y,z]} intensity={.2} /></group>
-    }
-    const renderMainPlanet = () => {
-        return  <group 
-                    position={[0,0,0]}
-                >
-                    <mesh>
-                        <sphereBufferGeometry args={[4, 64, 64]} />
-                        <meshLambertMaterial attach='material' color={0xc0c0c0} />
-                    </mesh>
-                    {menu.map((item, i) => renderItem(item.alpha, item.theta, i))}
-                </group>
-    }
-
     return (
         <group>
             <CameraControls ref={cameraControls} enabled={false} />
             <pointLight intensity={1} ref={pointLight} distance={200} position={[90,0,90]} />
             <Stars />
             <Planets />
-            {renderMainPlanet()}
+            <MainPlanet />
         </group>
     )
   }

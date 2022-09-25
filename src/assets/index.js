@@ -7,5 +7,8 @@ import Planet from "./Planet/Planet"
 import Stars from "./Stars/Stars"
 import CameraControls from "./CameraControls/CameraControls"
 import Planets from "./Planets/Planets"
-
-export { Text, Room, CovBox, CovMatrix, Menu, Planet, Stars, CameraControls, Planets }
+import MainPlanet from "./MainPlanet/MainPlanet"
+import SpaceStation from "./SpaceStation/SpaceStation"
+import Spot from "./Spot/Spot"
+import SupplyBox from "./SupplyBox/SupplyBox"
+export { Text, Room, CovBox, CovMatrix, Menu, Planet, Stars, CameraControls, Planets, MainPlanet, SpaceStation, Spot, SupplyBox }
